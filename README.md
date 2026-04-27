@@ -218,6 +218,7 @@ Scikit-learn - Classical ML algorithms
 XGBoost - Gradient boosting for predictions
 LSTM/GRU - Time-series forecasting
 A* + Genetic Algorithms - Route optimization
+MongoDB, Postgre SQL - database handling
 ```
 
 ### Data Visualization
