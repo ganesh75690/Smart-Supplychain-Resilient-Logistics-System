@@ -195,6 +195,10 @@ Real-Time Updates → Gemini AI Analysis → Optimized Decisions → Improved Op
 
 ---
 
+<img width="1536" height="1024" alt="WhatsApp Image 2026-04-28 at 1 05 20 AM" src="https://github.com/user-attachments/assets/b2d71f38-7094-4de0-943d-c78bfbfaa3ae" />
+
+---
+
 # 🛠️ Tech Stack :
 
 ### Frontend
