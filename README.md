@@ -1,27 +1,54 @@
-# 🚀 SmartChain AI - Intelligent Supply Chain & Logistics Platform
+# <h1 align="center">🌍 SmartChain AI 🚀</h1>
 
-> Next-generation supply chain platform with **Digital Twin** virtualization, **Multi-Agent AI** autonomous decision-making, and **Self-Learning** capabilities that continuously improve predictions and optimizations in real-time.
+## <p align="center"><b>💻 Intelligent Supply Chain Optimization & Resilient Logistics Platform 🚚</b></p>
 
-![Platform](https://img.shields.io/badge/Platform-Web-blue)
-![Tech](https://img.shields.io/badge/Tech-React%20%7C%20TypeScript%20%7C%20AI-purple)
-![Status](https://img.shields.io/badge/Status-Production%20Ready-green)
+### > Next-generation supply chain platform with **Digital Twin** virtualization, **Multi-Agent AI** autonomous decision-making, and **Self-Learning** capabilities that continuously improve predictions and optimizations in real-time.
+### - “Revolutionizing supply chains with AI-driven intelligence and real-time decision power.”
+
+
+
+  <a href="https://supply-chain-demo-5d7cd.web.app/">
+    <img src="https://img.shields.io/badge/🚀%20Launch%20SmartChain%20AI-Live%20Demo-blueviolet?style=for-the-badge&logo=google-chrome&logoColor=white"/>
+  </a>
+</p>
+
 
 ---
 
 ## ✨ Platform Overview
 
-**SmartChain AI** creates a **Digital Twin** of your entire supply chain powered by a **Multi-Agent AI System** that autonomously detects disruptions and makes optimized decisions like rerouting deliveries, reallocating resources, and adjusting inventory **before** failures occur. The platform includes an advanced **Self-Learning Feedback System** that continuously improves from real-world outcomes, making it a fully intelligent, adaptive, and self-optimizing logistics ecosystem.
+- The AI-Powered Supply Chain Resilient Logistics System is an intelligent decision-support platform designed to transform traditional supply chain operations into data-driven, adaptive, and resilient systems.
+In today’s dynamic logistics environment, organizations face challenges such as demand fluctuations, delivery delays, route inefficiencies, and rising operational costs. This platform addresses these challenges by leveraging Google Gemini AI to provide real-time insights, predictive recommendations, and optimized decision-making across the supply chain lifecycle.
+- The platform integrates a modern web interface with a scalable backend architecture and real-time AI processing, ensuring seamless interaction between users and advanced machine learning capabilities.
 
 ### 🎯 Revolutionary Capabilities
 
-- **Digital Twin Engine** - Real-time virtual replica of entire supply chain
-- **Multi-Agent AI System** - Autonomous decision-making with 6 specialized AI agents
-- **Self-Learning AI** - Continuous improvement from outcomes (78% → 94% accuracy)
-- **Predictive Disruption Detection** - AI forecasts issues before they happen (91.8% accuracy)
-- **Autonomous Decision-Making** - 4,270+ automated decisions daily
-- **What-If Simulation** - Test real-world scenarios (traffic, weather, demand spikes)
-- **Sustainability Analytics** - Carbon tracking and green optimization (-28.5% emissions)
-- **End-User Tracking** - Real-time parcel tracking for customers with live ETA
+- 🤖 **AI-Powered Logistics Copilot**  
+  Leverages Google Gemini for real-time decision support  
+
+- 📊 **Predictive Intelligence**  
+  Anticipates disruptions and optimizes operations proactively  
+
+- 🚚 **Smart Route Optimization**  
+  Minimizes delivery time and reduces operational costs  
+
+- ⚡ **Real-Time Insights**  
+  Enables faster, data-driven decision-making  
+
+- 🔄 **Resilient System Design**  
+  Adapts to uncertainties in dynamic supply chain environments  
+
+- 🧠 **Natural Language Interface**  
+  Allows intuitive interaction using conversational AI  
+
+- 🌐 **Cloud-Based Architecture**  
+  Ensures scalability, reliability, and high availability  
+
+- 🔒 **Secure & Modular Design**  
+  Built for extensibility and future enhancements  
+
+- 🎯 **Data-Driven Optimization**  
+  Improves efficiency and overall system performance  
 
 ---
 
@@ -44,31 +71,24 @@
 
 ### 3. Multi-Agent AI System
 - 🤖 **6 Specialized Agents** - Route Optimizer, Demand Predictor, Disruption Detector, Inventory Manager, Resource Allocator, Learning Engine
-- ⚡ **4,270 Decisions/Day** - Fully autonomous decision-making
-- 🎯 **96.1% Avg Accuracy** - Industry-leading prediction accuracy
-- ⏱️ **2.3s Response Time** - Lightning-fast decision execution
+- ⚡ **Decisions/Day** - Fully autonomous decision-making
+- 🎯 **Best Accuracy** - Industry-leading prediction accuracy
+- ⏱️ **Best Response Time** - Lightning-fast decision execution
 - 🔄 **100% Autonomous** - No human intervention required for routine decisions
 
-### 4. Sustainability Dashboard
-- 🌱 **Carbon Tracking** - 1,240 kg CO₂ saved (-28.5% reduction)
-- ⚡ **Energy Optimization** - 847 kWh optimized (+12.8%)
-- 💧 **Fuel Efficiency** - +15.3% improvement through smart routing
-- 🏆 **Green Score** - 94/100 sustainability rating
-- 📊 **Emission Breakdown** - Transportation (45%), Warehousing (25%), Packaging (20%)
-
 ### 5. Self-Learning Feedback System
-- 🧠 **Continuous Improvement** - 78% → 94% accuracy gain over 6 weeks
-- 🔄 **247 Feedback Cycles** - Real-world outcome validation
-- 📈 **8,930 Data Points** - Massive learning dataset
-- 🎯 **Model Version v6.2** - Continuously updated AI models
+- 🧠 **Continuous Improvement** - 78% → 97% accuracy gain over weeks
+- 🔄 **Feedback Cycles** - Real-world outcome validation
+- 📈 **Data Points** - Massive learning dataset
+- 🎯 **Model Version** - Continuously updated AI models
 - ✅ **Outcome Validation** - Compares predictions with actual results
 
 ### 6. End-User Tracking
 - 📦 **Live Parcel Tracking** - Real-time location updates every 30 seconds
-- 🎯 **AI-Powered ETA** - 96% confidence predictions
+- 🎯 **AI-Powered ETA** - Strong confidence predictions
 - 🗺️ **Interactive Map** - See driver location and your destination
 - 🚚 **Driver Info** - Name, rating, contact information
-- 🔔 **Smart Notifications** - 5-minute advance arrival alerts
+- 🔔 **Smart Notifications** - Ealry minute advance arrival alerts
 
 ### 7. Driver Mobile App
 - 🧭 **Optimized Navigation** - AI-recommended routes with real-time updates
@@ -78,11 +98,76 @@
 - ⭐ **Performance Tracking** - 94% on-time delivery rate
 
 ### 8. Supplier Portal
-- 📈 **6-Month Demand Forecast** - 94.2% MAE accuracy with LSTM
+- 📈 **Monthly Demand Forecast** - Best MAE accuracy with LSTM
 - 📉 **Inventory Depletion Trends** - Real-time stock level monitoring
 - 💡 **AI Reorder Recommendations** - Automated quantity and timing suggestions
-- 💰 **Revenue Analytics** - ₹284K monthly revenue tracking
-- ✅ **97.8% On-Time Delivery** - Supplier performance metrics
+- 💰 **Revenue Analytics** - Optimized total monthly revenue tracking
+- ✅ **On-Time Delivery** - Supplier performance metrics
+
+---
+# Workflow :
+
+<h1 align="center">
+  
+```
+🔄 Role-Based System Workflow
+
+👨‍💼 Admin Workflow
+
+Admin Login
+⬇
+Monitor Dashboard (orders, inventory, routes)
+⬇
+Analyze Issues (delays, cost, demand)
+⬇
+Ask AI Assistant (Gemini) for insights
+⬇
+Receive Recommendations (optimize routes, reduce cost)
+⬇
+Make Strategic Decisions & Assign Tasks
+
+---
+
+🏭 Supplier Workflow
+
+Supplier Login
+⬇
+View Demand & Inventory Requirements
+⬇
+Manage Stock & Supply Updates
+⬇
+Respond to Orders / Requests
+⬇
+(Optional) Use AI Insights for supply optimization
+⬇
+Update Delivery Status
+
+---
+
+🚚 Driver Workflow
+
+Driver Login
+⬇
+View Assigned Deliveries & Routes
+⬇
+Follow Optimized Route Suggestions
+⬇
+Update Real-Time Status (pickup, in transit, delivered)
+⬇
+Report Issues / Delays
+⬇
+System Updates Admin Dashboard
+
+---
+
+🔗 Integrated Flow (End-to-End)
+
+Admin → Assign Tasks → Supplier Provides Stock → Driver Delivers →
+⬇
+Real-Time Updates → Gemini AI Analysis → Optimized Decisions → Improved Operations
+```
+</h1>
+
 
 ---
 
@@ -119,6 +204,11 @@ Tailwind - Gradient & glassmorphism styling
 
 ## 🚀 Getting Started
 
+Easily get started by cloning the project, installing dependencies, and setting up your Gemini API key.
+Launch the application locally to experience real-time AI-powered supply chain insights.
+The platform integrates seamlessly with Google Gemini for intelligent decision support.
+Alternatively, access the live deployed version to explore the system instantly.
+
 ### Prerequisites
 - Node.js 16+ or Bun
 - Modern browser (Chrome, Firefox, Safari, Edge)
@@ -133,7 +223,7 @@ git clone https://github.com/your-team/smartchain-ai.git
 cd smartchain-ai
 
 # Install dependencies
-pnpm install
+npm install
 
 # Start development server (already running in Figma Make)
 # The app is automatically available in the preview
@@ -142,9 +232,8 @@ pnpm install
 ### Usage
 
 1. **Admin Dashboard** - Main view showing all logistics operations
-2. **Driver App** - Click "Driver App" in sidebar for mobile interface
-3. **Supplier Portal** - Click "Supplier Portal" for inventory insights
-4. **Simulations** - Scroll to bottom of Admin Dashboard to test scenarios
+2. **Supplier Portal** - Click "Supplier Portal" for inventory insights
+3. **Simulations** - Scroll to bottom of Admin Dashboard to test scenarios
 
 ---
 
@@ -208,26 +297,6 @@ Every prediction includes:
 - **Impact Metrics** - Expected cost/time savings
 - **Priority Level** - High/Medium/Low urgency
 
----
-
-## 📊 Performance Metrics
-
-### System Performance
-| Metric | Target | Current |
-|--------|--------|---------|
-| API Response | <200ms | 150ms |
-| AI Prediction | <500ms | 420ms |
-| Route Optimization | <2s | 1.8s |
-| WebSocket Latency | <50ms | 35ms |
-
-### Business Impact
-| KPI | Improvement |
-|-----|-------------|
-| Cost Reduction | 12.5% |
-| Delays Reduced | 34% |
-| Overall Efficiency | 94.2% |
-| Inventory Accuracy | 98.8% |
-| Prediction Accuracy | 89-94% |
 
 ---
 
@@ -246,6 +315,21 @@ Every prediction includes:
 - **Mobile Responsive** - Optimized for all screen sizes
 
 ---
+# 📸 Screenshots :
+
+<img width="1902" height="913" alt="image" src="https://github.com/user-attachments/assets/7d52c150-147e-4c16-9941-97a774739511" />
+
+<img width="1867" height="897" alt="image" src="https://github.com/user-attachments/assets/36398719-9af7-4fd3-a73c-f31d8c67db7c" />
+
+## Mobile UI under development :
+
+<img width="1036" height="587" alt="image" src="https://github.com/user-attachments/assets/2e385c6b-c4bc-41dc-b51f-0fde80a0cf4b" />
+
+
+
+
+
+---
 
 ## 🔄 What-If Simulation Engine
 
@@ -254,7 +338,7 @@ Test different scenarios to predict their impact:
 ### Available Scenarios
 1. **Heavy Traffic** - 50% increase in congestion
 2. **Severe Weather** - Storm causing 2-hour delays
-3. **Demand Surge** - 200% spike in orders
+3. **Demand Surge** - Strong spike in orders
 4. **Driver Shortage** - 30% reduction in workforce
 
 ### Simulation Output
@@ -270,7 +354,7 @@ Test different scenarios to predict their impact:
 
 - **JWT Authentication** - Secure token-based auth
 - **Role-Based Access** - Admin/Driver/Supplier permissions
-- **API Rate Limiting** - 100 requests/min per user
+- **API Rate Limiting** -  requests/min per user
 - **Encrypted Transport** - TLS 1.3 for all data
 - **Audit Logging** - Track all critical operations
 
@@ -305,7 +389,7 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed technical specifications.
 
 ### For Logistics & Courier Providers
 - **Fleet Tracking** - Real-time vehicle monitoring with risk heatmaps
-- **Autonomous Rerouting** - Multi-agent AI makes 4,270+ decisions daily
+- **Autonomous Rerouting** - Multi-agent AI makes more decisions daily
 - **Predictive Maintenance** - Optimize vehicle health to save 12% fuel
 - **Driver Optimization** - Smart allocation with 97.8% on-time delivery
 - **Multi-Agent System** - 6 specialized AI agents working 24/7
@@ -337,10 +421,25 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed technical specifications.
 - **Performance Analytics** - Track efficiency, costs, and sustainability
 
 ---
+## 📊 Before vs After (AI-Driven Transformation)
 
-## 🤝 Contributing
+| Aspect | Before (Traditional System) | After (AI-Powered System) |
+|--------|----------------------------|----------------------------|
+| Decision Making | Manual, experience-based | AI-driven, data-backed decisions |
+| Response Time | Slow, reactive | Instant, real-time insights |
+| Route Planning | Static and inefficient | Dynamic, optimized routing |
+| Cost Management | Limited visibility | AI-driven cost optimization |
+| Risk Handling | Reactive to disruptions | Predictive and proactive mitigation |
+| Data Utilization | Underutilized data | Intelligent data-driven insights |
+| User Interaction | Complex dashboards | Simple natural language queries |
+| Operational Efficiency | Inconsistent performance | Optimized and scalable operations |
+| Scalability | Hard to scale | Cloud-based, highly scalable |
+| System Intelligence | Static rules | Adaptive, learning-based intelligence |
+---
 
-This is a hackathon project, but we welcome contributions!
+## 🤝 Contributing :
+
+This is a project, but we welcome contributions!
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -365,13 +464,77 @@ MIT License - see [LICENSE](./LICENSE) file for details
 - **React** - UI framework
 
 ---
-
-## 📧 Contact
-
-**Team**: SmartChain AI  
-**Project**: Supply Chain Intelligence Platform  
-**Built For**: Hackathon 2026
-
+# Project structure 
+```
+smart-supply-chain-platform/
+├── 📁 frontend/                    # React Frontend Application
+│   ├── 📁 src/
+│   │   ├── 📄 ai.js              # Gemini AI Integration
+│   │   ├── 📄 AIChat.jsx          # AI Chat Component
+│   │   ├── 📄 AIChat.jsx.d.ts     # TypeScript Definitions
+│   │   ├── 📁 app/
+│   │   │   ├── 📄 App.tsx           # Main Application Router
+│   │   │   ├── 📄 main.tsx          # React Entry Point
+│   │   │   ├── 📁 components/        # React Components
+│   │   │   │   ├── 📄 AILogisticsCopilot.tsx
+│   │   │   │   ├── 📄 SupplierInterface.tsx
+│   │   │   │   ├── 📄 NetworkAutopilot.tsx
+│   │   │   │   ├── 📄 LiveMap.tsx
+│   │   │   │   ├── 📄 LoginPage.tsx
+│   │   │   │   ├── 📄 WelcomePage.tsx
+│   │   │   │   ├── 📁 supplier/         # Supplier Components
+│   │   │   │   │   ├── 📄 SupplierDashboard.tsx
+│   │   │   │   │   ├── 📄 SupplierPortal.tsx
+│   │   │   │   │   ├── 📄 SupplierLoginPage.tsx
+│   │   │   │   │   └── 📄 AIAssistant.tsx
+│   │   │   └── 📁 [20+ more components]
+│   │   ├── 📁 styles/            # CSS & Styling
+│   │   └── 📄 vite-env.d.ts      # Vite Type Definitions
+│   ├── 📄 package.json              # Frontend Dependencies
+│   ├── 📄 vite.config.ts           # Vite Configuration
+│   ├── 📄 tsconfig.json            # TypeScript Config
+│   └── 📄 index.html               # HTML Template
+│
+├── 📁 backend/                     # Node.js Backend API
+│   ├── 📄 server.js               # Express Server Entry
+│   ├── 📄 package.json            # Backend Dependencies
+│   ├── 📄 requirements.txt         # Python Requirements
+│   ├── 📁 app/                    # Application Logic
+│   │   ├── 📁 models/               # Database Models
+│   │   │   └── 📄 NetworkAutopilot.js
+│   │   ├── 📁 services/             # Business Logic
+│   │   │   ├── 📄 vertex_ai.py      # Google Vertex AI Mock
+│   │   │   ├── 📄 gemini.py          # Google Gemini Mock
+│   │   │   ├── 📄 google_maps.py     # Google Maps Mock
+│   │   │   ├── 📄 firebase.py         # Firebase Mock
+│   │   │   └── 📄 bigquery.py         # BigQuery Mock
+│   │   └── 📁 routers/              # API Routes
+│   │       ├── 📄 networkAutopilotRoutes.js
+│   │       └── 📄 [6 more route files]
+│   ├── 📁 middleware/            # Security & Auth
+│   │   ├── 📄 auth.js             # JWT Authentication
+│   │   └── 📄 requireAdmin.js     # Role-based Access
+│   ├── 📄 .env.production        # Production Environment
+│   ├── 📄 .env.example          # Environment Template
+│   ├── 📄 Dockerfile             # Container Config
+│   ├── 📄 docker-compose.yml     # Multi-Service Setup
+│   └── 📄 firebase_service_account.json  # Firebase Config
+│
+├── 📁 gcp/                         # Google Cloud Deployment
+│   ├── 📄 cloudbuild.yaml      # CI/CD Pipeline
+│   ├── 📄 backend.yaml          # App Engine Config
+│   ├── 📄 app.yaml             # Application Config
+│   └── 📄 backend.yaml         # Backend Service Config
+│
+├── 📁 minimal-demo/                 # Minimal Demo Version
+│   └── 📄 package.json        # Demo Dependencies
+│
+├── 📄 .gitignore                    # Git Ignore Rules
+├── 📄 README.md                     # Main Documentation
+├── 📄 ARCHITECTURE.md               # System Architecture
+├── 📄 GCP_DEPLOYMENT_GUIDE.md      # Deployment Guide
+└── 📄 backend/README.md              # Backend Docs
+```
 ---
 
 ## 🎥 Demo
@@ -383,7 +546,7 @@ MIT License - see [LICENSE](./LICENSE) file for details
 4. **Sustainability** - Track carbon savings and green initiatives
 5. **Self-Learning** - See AI improve from 78% to 94% accuracy
 6. **User Tracking** - Experience customer parcel tracking interface
-7. **Driver App** - Mobile-optimized navigation and delivery management
+7. **Driver App** - It is based on UI model under developing
 8. **Supplier Portal** - Demand forecasting and reorder automation
 
 ### Key Interactions
@@ -398,12 +561,29 @@ MIT License - see [LICENSE](./LICENSE) file for details
 ## 📚 Documentation
 
 - [Architecture Guide](./ARCHITECTURE.md) - Technical deep dive
-- [API Documentation](#) - Endpoint specifications (Coming Soon)
-- [Deployment Guide](#) - Production deployment (Coming Soon)
-- [User Manual](#) - End-user documentation (Coming Soon)
 
 ---
+# 📚 Future enhancements :
 
+- 🤖 Integrate advanced predictive models (Vertex AI) for demand forecasting and risk analysis
+- 📊 Enable real-time analytics dashboards using BigQuery for large-scale insights
+- 🗺️ Incorporate Google Maps API for live route tracking and geo-optimization
+- 🔄 Implement automated decision engines for self-optimizing supply chain workflows
+- 📡 Add IoT-based tracking for real-time monitoring of shipments and assets
+- 🧠 Enhance AI with context memory for smarter, personalized recommendations
+- 🌐 Expand to multi-organization, enterprise-scale deployment architecture
+- ⚡ Deploy backend on Google Cloud Run for fully cloud-native scalability
+- 🔐 Strengthen security with role-based access control and audit systems
+- 📈 Introduce performance analytics and KPI tracking for continuous optimization
+
+---
+# 🤖 Conclusin :
+
+The AI-Powered Supply Chain Resilient Logistics System represents a shift from conventional logistics management to intelligent, self-optimizing ecosystems. By leveraging Google Gemini AI, the platform delivers real-time insights and adaptive decision-making capabilities that enhance efficiency and resilience. It bridges the gap between data and action, enabling organizations to respond proactively to dynamic supply chain challenges. This solution illustrates how AI can drive meaningful transformation in logistics by improving performance, reducing costs, and increasing operational visibility. With a scalable cloud-based architecture, it is positioned for future expansion into enterprise-level systems. Ultimately, it highlights the transformative power of AI in building smarter and more resilient supply chains.
+
+## “Transforming supply chains from reactive operations into intelligent, self-optimizing ecosystems.”
+
+---
 **Built with ❤️ for the future of supply chain management**
 
 *SmartChain AI - Where Intelligence Meets Logistics*
