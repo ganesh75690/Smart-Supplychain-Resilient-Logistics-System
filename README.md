@@ -228,7 +228,30 @@ Custom SVG - Map visualizations
 Motion - Smooth animations
 Tailwind - Gradient & glassmorphism styling
 ```
+
+###  Data Architecture :
+```
+
+ PostgreSQL → Structured business data (orders, inventory, users)  
+ MongoDB → Real-time logs, alerts, tracking data  
+ Redis → High-speed caching for performance optimization
+```
+###  Google Cloud & AI Services Used :
+```
+- 🤖 Google Gemini API → Natural language understanding, AI-driven insights, and decision support
+- 🔐 Firebase Authentication → Secure user login, OTP verification, and session management
+- 🌐 Firebase Hosting → Fast, scalable, and reliable deployment of the web application
+- 🔄 Firebase Realtime Features → Live updates, notifications, and real-time data synchronization
+- 📊 Google BigQuery (Planned / Scalable) → Advanced analytics, reporting, and large-scale data processing
+- 🧠 Google Vertex AI (Future Integration) → Predictive modeling, demand forecasting, and advanced AI capabilities
+- 🗺️ Google Maps API (Future Scope) → Route visualization, distance calculation, and geo-based optimization
+
+👉 These services collectively enable a scalable, intelligent, and cloud-native supply chain platform built on Google’s ecosystem.
+
+```
+
 ---
+
 # 📈 Expected Impact :
 
 <div align="center">
