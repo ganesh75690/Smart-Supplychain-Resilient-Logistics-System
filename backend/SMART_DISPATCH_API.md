@@ -1,5 +1,7 @@
 # Smart Dispatch Optimizer API Documentation
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## Overview
 The Smart Dispatch Optimizer API provides AI-powered dispatch decision support, real-time driver tracking, and intelligent route optimization.
 

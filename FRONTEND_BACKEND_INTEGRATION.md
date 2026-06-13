@@ -1,5 +1,7 @@
 # 🚀 Frontend-Backend Integration Guide
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## 📋 Prerequisites
 
 1. **Backend Server**: Running at `http://localhost:8000`

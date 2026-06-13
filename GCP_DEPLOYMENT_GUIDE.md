@@ -1,4 +1,7 @@
 # Google Cloud Deployment Guide
+
+Maintenance note: refreshed on 2026-06-13.
+
 ## Smart Supply Chain Platform - 300 Credits Setup
 
 ### 🚀 Quick Start (5 Steps)

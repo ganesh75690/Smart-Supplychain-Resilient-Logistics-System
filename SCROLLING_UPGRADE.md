@@ -1,5 +1,7 @@
 # 📱 FULLY SCROLLABLE WEB INTERFACE - COMPLETE
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## 🎯 **UPGRADE SUMMARY**
 
 Successfully implemented **comprehensive scrolling improvements** to make the entire web interface fully scrollable and mobile-friendly!

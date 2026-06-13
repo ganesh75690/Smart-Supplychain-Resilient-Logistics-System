@@ -1,5 +1,7 @@
 # 🏆 SmartChain AI - Competitive Advantage & Differentiation
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## Why SmartChain AI is Revolutionary, Not Incremental
 
 Most logistics platforms are **tracking and analytics tools**. SmartChain AI is a **fully autonomous, self-optimizing ecosystem** powered by cutting-edge AI that doesn't just monitor — it **predicts, decides, acts, and learns**.

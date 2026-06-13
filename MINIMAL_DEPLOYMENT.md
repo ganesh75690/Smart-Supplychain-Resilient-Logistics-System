@@ -1,5 +1,7 @@
 # 🎯 Minimal Deployment - Save Your Credits!
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## ❌ AVOID: Full Production Setup ($175/month)
 - ❌ Firebase integration
 - ❌ Full backend deployment  

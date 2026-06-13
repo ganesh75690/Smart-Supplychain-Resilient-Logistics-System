@@ -1,5 +1,7 @@
 # Smart Supply Chain Platform Backend
 
+Maintenance note: refreshed on 2026-06-13.
+
 A comprehensive demo/prototype backend for an AI-powered Smart Supply Chain & Logistics Platform built with FastAPI and Python.
 
 ## 🚀 Features

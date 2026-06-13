@@ -1,5 +1,7 @@
 # 🎯 Team Management Integration Complete
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## ✅ **What Was Done**
 
 ### **🔄 Merged Driver Management into Team Management**
