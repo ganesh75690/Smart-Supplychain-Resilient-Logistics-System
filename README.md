@@ -15,6 +15,8 @@
 
 ---
 
+Maintenance note: updated on 2026-06-13.
+
 # ✨ Platform Overview :
 
 - The AI-Powered Supply Chain Resilient Logistics System is an intelligent decision-support platform designed to transform traditional supply chain operations into data-driven, adaptive, and resilient systems.
