@@ -1,4 +1,5 @@
 **Add your own guidelines here**
+Maintenance note: refreshed on 2026-06-13.
 <!--
 
 System Guidelines

@@ -1,5 +1,7 @@
 # 🚀 Quick Start: Deploy to Google Cloud
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## You have 300 credits and 90-day free trial - Let's deploy!
 
 ### **Step 1: Install Required Tools** (5 minutes)

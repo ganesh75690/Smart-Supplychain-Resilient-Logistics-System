@@ -1,5 +1,7 @@
 # SmartChain AI - Technical Architecture
 
+Maintenance note: refreshed on 2026-06-13.
+
 ## 🎯 Platform Overview
 
 **SmartChain AI** is an enterprise-grade Smart Supply Chain & Logistics platform powered by Artificial Intelligence. The platform predicts disruptions, optimizes logistics in real-time, and automates decision-making across routing, inventory, and supply chain operations.
