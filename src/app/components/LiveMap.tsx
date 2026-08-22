@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Navigation, AlertTriangle, TrendingUp } from 'lucide-react';
+import { AlertTriangle, TrendingUp } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -47,13 +47,6 @@ const indianCities: City[] = [
   { name: 'Hyderabad', coords: [17.3850, 78.4867], type: 'hub' },
   { name: 'Pune', coords: [18.5204, 73.8567], type: 'warehouse' },
   { name: 'Jaipur', coords: [26.9124, 75.7873], type: 'warehouse' },
-];
-
-const globalOverview = [
-  { region: 'North', active: 145, completed: 892, delayed: 12, efficiency: 92 },
-  { region: 'South', active: 132, completed: 756, delayed: 8, efficiency: 94 },
-  { region: 'East', active: 98, completed: 623, delayed: 15, efficiency: 87 },
-  { region: 'West', active: 167, completed: 945, delayed: 6, efficiency: 96 },
 ];
 
 const mockRoutes: Route[] = [
@@ -234,46 +227,10 @@ export function LiveMap() {
         <button className="p-3 bg-slate-800/90 backdrop-blur-md rounded-lg border border-slate-700/50 text-white hover:bg-slate-700/90 transition-colors" title="Analytics">
           <TrendingUp className="w-4 h-4" />
         </button>
-        <button className="p-3 bg-slate-800/90 backdrop-blur-md rounded-lg border border-slate-700/50 text-white hover:bg-slate-700/90 transition-colors" title="Navigation">
-          <Navigation className="w-4 h-4" />
-        </button>
       </div>
 
       {/* Below Map Sections */}
       <div className="absolute bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-700/50 p-4">
-        {/* Global Operations Overview */}
-        <div className="mb-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Navigation className="w-4 h-4 text-blue-400" />
-            <h3 className="text-sm font-semibold text-white">Global Operations Overview</h3>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {globalOverview.map((region) => (
-              <div key={region.region} className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
-                <div className="text-sm font-semibold text-white mb-2">{region.region}</div>
-                <div className="space-y-1 text-xs">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Active:</span>
-                    <span className="text-blue-400 font-medium">{region.active}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Completed:</span>
-                    <span className="text-green-400 font-medium">{region.completed}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Delayed:</span>
-                    <span className="text-red-400 font-medium">{region.delayed}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Efficiency:</span>
-                    <span className="text-purple-400 font-medium">{region.efficiency}%</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Active Routes Section */}
           <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, Store, Brain, Menu, X, Layers, Bot, Leaf, RefreshCw, LogOut, Bell, User, BarChart3, Settings, Package, Gauge, Satellite, MessageCircle, Users, Truck, AlertTriangle } from 'lucide-react';
+import { LayoutDashboard, Store, Brain, Menu, X, Layers, Bot, Leaf, RefreshCw, LogOut, Bell, User, BarChart3, Settings, Package, Gauge, Satellite, MessageCircle, Users, Truck, AlertTriangle, Clock, MessageSquare, Database, Shield, Globe, Building2 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from 'motion/react';
 import { LiveMap } from './components/LiveMap';
@@ -35,8 +35,15 @@ import { DriverReportInbox } from './components/Driver_Report_Inbox';
 import { Admin_Software_Update_Center } from './components/Admin_Software_Update_Center';
 import { NetworkAutopilot } from './components/NetworkAutopilot';
 import { AIChat } from '../AIChat';
+import { TimeMachineDashboard } from './components/TimeMachine/TimeMachineDashboard';
+import { MultiAgentDebateDashboard } from './components/MultiAgentDebate/MultiAgentDebateDashboard';
+import { CognitiveMemoryDashboard } from './components/CognitiveMemory/CognitiveMemoryDashboard';
+import { ImmuneSystemDashboard } from './components/ImmuneSystem/ImmuneSystemDashboard';
+import { GASDFDashboard } from './components/GASDF/GASDFDashboard';
+import { SupplierIntelligence } from './components/admin/SupplierIntelligence';
+import { ToastContainer } from './components/ui/Toast';
 
-type View = 'admin' | 'supplier' | 'digital-twin' | 'multi-agent' | 'sustainability' | 'self-learning' | 'profile' | 'admin-controls' | 'inventory-management' | 'system-optimization' | 'ai-copilot' | 'team-coordination' | 'team-management' | 'vehicle-detail' | 'driver-reports' | 'software-update-center' | 'network-autopilot' | 'intro';
+type View = 'admin' | 'supplier' | 'digital-twin' | 'multi-agent' | 'sustainability' | 'self-learning' | 'profile' | 'admin-controls' | 'inventory-management' | 'system-optimization' | 'ai-copilot' | 'team-coordination' | 'team-management' | 'vehicle-detail' | 'driver-reports' | 'software-update-center' | 'network-autopilot' | 'time-machine' | 'agent-debate' | 'cognitive-memory' | 'immune-system' | 'gasdf' | 'supplier-intelligence' | 'intro';
 
 interface User {
   userId: string;
@@ -175,9 +182,13 @@ export default function App() {
     { id: 'system-optimization' as View, name: 'System Optimization', icon: Gauge, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'digital-twin' as View, name: 'Digital Twin', icon: Layers, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'multi-agent' as View, name: 'Multi-Agent AI', icon: Bot, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'agent-debate' as View, name: 'Agent Debate', icon: MessageSquare, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'cognitive-memory' as View, name: 'Cognitive Memory', icon: Database, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'immune-system' as View, name: 'Immune System', icon: Shield, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'sustainability' as View, name: 'Sustainability', icon: Leaf, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'self-learning' as View, name: 'Self-Learning', icon: RefreshCw, color: 'from-[#00F5C4] to-[#00D4A8]' },
-    { id: 'supplier' as View, name: 'Supplier Portal', icon: Store, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'time-machine' as View, name: 'Time Machine', icon: Clock, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'supplier' as View, name: 'LogiCortex AI Supplier Portal', icon: Store, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'team-coordination' as View, name: 'Team Coordination', icon: Users, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'team-management' as View, name: 'Team Management', icon: Users, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'ai-copilot' as View, name: 'Logistics Assistant', icon: MessageCircle, color: 'from-[#00F5C4] to-[#00D4A8]' },
@@ -185,6 +196,8 @@ export default function App() {
     { id: 'driver-reports' as View, name: 'Driver Reports', icon: AlertTriangle, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'software-update-center' as View, name: 'Software Update Center', icon: RefreshCw, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'network-autopilot' as View, name: 'Network Autopilot', icon: Brain, color: 'from-purple-500 to-purple-600' },
+    { id: 'gasdf' as View, name: 'GASDF™', icon: Globe, color: 'from-purple-500 to-purple-600' },
+    { id: 'supplier-intelligence' as View, name: 'Supplier Intelligence', icon: Building2, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'profile' as View, name: 'Admin Profile', icon: User, color: 'from-[#00F5C4] to-[#00D4A8]' },
   ];
 
@@ -207,7 +220,7 @@ export default function App() {
                   <Brain className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white">SmartChain AI</h1>
+                  <h1 className="text-xl font-bold text-white">LogiCortex AI</h1>
                   <p className="text-xs text-slate-400">Supply Chain Intelligence</p>
                 </div>
               </div>
@@ -229,7 +242,7 @@ export default function App() {
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
                     <span className="text-xs text-slate-500">Company:</span>
-                    <span className="text-xs font-medium text-cyan-300">SmartChain Logistics Ltd.</span>
+                    <span className="text-xs font-medium text-cyan-300">LogiCortex Logistics Ltd.</span>
                   </div>
                 </div>
                 
@@ -476,7 +489,7 @@ export default function App() {
                 {/* KPI Cards */}
                 <KPICards />
 
-                {/* Live Map - Full Width Above */}
+                {/* Live Map - Full Width */}
                 <div className="h-[800px]">
                   <LiveMap />
                 </div>
@@ -812,6 +825,78 @@ export default function App() {
               </motion.div>
             )}
 
+            {activeView === 'time-machine' && (
+              <motion.div
+                key="time-machine"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <TimeMachineDashboard />
+              </motion.div>
+            )}
+
+            {activeView === 'agent-debate' && (
+              <motion.div
+                key="agent-debate"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <MultiAgentDebateDashboard />
+              </motion.div>
+            )}
+
+            {activeView === 'cognitive-memory' && (
+              <motion.div
+                key="cognitive-memory"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <CognitiveMemoryDashboard />
+              </motion.div>
+            )}
+
+            {activeView === 'immune-system' && (
+              <motion.div
+                key="immune-system"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ImmuneSystemDashboard />
+              </motion.div>
+            )}
+
+            {activeView === 'gasdf' && (
+              <motion.div
+                key="gasdf"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <GASDFDashboard />
+              </motion.div>
+            )}
+
+            {activeView === 'supplier-intelligence' && (
+              <motion.div
+                key="supplier-intelligence"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <SupplierIntelligence />
+              </motion.div>
+            )}
+
             {activeView === 'profile' && (
               <motion.div
                 key="profile"
@@ -917,6 +1002,9 @@ export default function App() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse [animation-delay:1s]" />
       </div>
+
+      {/* Toast Notifications */}
+      <ToastContainer />
     </div>
   );
 }

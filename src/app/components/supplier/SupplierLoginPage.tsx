@@ -77,8 +77,8 @@ export function SupplierLoginPage({ onLogin }: SupplierLoginPageProps) {
           >
             <Package className="w-10 h-10 text-white" />
           </motion.div>
-          <h1 className="text-3xl font-bold text-white mb-2">Supplier Portal</h1>
-          <p className="text-slate-400">Planning & Inventory Management System</p>
+          <h1 className="text-3xl font-bold text-white mb-2">LogiCortex AI</h1>
+          <p className="text-slate-400">Supplier Planning & Inventory Management System</p>
         </div>
 
         {/* Login Form */}

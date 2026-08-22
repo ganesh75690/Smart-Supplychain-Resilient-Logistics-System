@@ -23,8 +23,11 @@ import {
   BarChart3,
   Timer,
   Route,
-  Split
+  Split,
+  Package as PackageIcon,
+  Check
 } from 'lucide-react';
+import { ACODashboard } from '../ACO/ACODashboard';
 
 interface DemandZone {
   id: string;
@@ -61,7 +64,7 @@ interface DispatchSuggestion {
 }
 
 const Supplier_Smart_Dispatch = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'zones' | 'drivers' | 'suggestions'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'zones' | 'drivers' | 'suggestions' | 'aco'>('overview');
   const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
@@ -304,7 +307,8 @@ const Supplier_Smart_Dispatch = () => {
             { id: 'overview', label: 'Overview', icon: BarChart3 },
             { id: 'zones', label: 'Demand Zones', icon: MapPin },
             { id: 'drivers', label: 'Drivers', icon: Users },
-            { id: 'suggestions', label: 'AI Suggestions', icon: Zap }
+            { id: 'suggestions', label: 'AI Suggestions', icon: Zap },
+            { id: 'aco', label: 'ACO Optimizer', icon: Activity }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -325,7 +329,7 @@ const Supplier_Smart_Dispatch = () => {
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
         <div className="p-6">
-      <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait">
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <motion.div
@@ -758,6 +762,17 @@ const Supplier_Smart_Dispatch = () => {
             </div>
           </motion.div>
         )}
+
+        {/* ACO Optimizer Tab */}
+        {activeTab === 'aco' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <ACODashboard />
+          </motion.div>
+        )}
       </AnimatePresence>
         </div>
       </div>
@@ -1148,23 +1163,6 @@ const Supplier_Smart_Dispatch = () => {
                 </div>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Notification Toast */}
-      <AnimatePresence>
-        {notification && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.8 }}
-            className="fixed bottom-6 right-6 bg-slate-800 border border-green-500/50 text-white p-4 rounded-lg shadow-xl max-w-sm z-50"
-          >
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-sm">{notification}</p>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

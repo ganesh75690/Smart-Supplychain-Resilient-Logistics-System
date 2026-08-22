@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  MessageSquare, 
-  Users, 
-  Send, 
-  Phone, 
-  Video, 
-  Bell, 
-  CheckCircle, 
-  Clock, 
+import {
+  MessageSquare,
+  Users,
+  Send,
+  Phone,
+  Video,
+  Bell,
+  CheckCircle,
+  Clock,
   AlertTriangle,
   MapPin,
   Truck,
@@ -30,14 +30,19 @@ import {
   Star,
   Eye,
   EyeOff,
-  UserPlus
+  UserPlus,
+  Shield,
+  Lock,
+  Key,
+  Globe,
+  Building2
 } from 'lucide-react';
 import { AdminInviteUsers } from './admin/AdminInviteUsers';
 
 interface TeamMember {
   id: string;
   name: string;
-  role: 'admin' | 'driver' | 'supplier' | 'logistics' | 'warehouse';
+  role: 'admin' | 'driver' | 'supplier' | 'logistics' | 'warehouse' | 'super_admin' | 'operations_manager' | 'supply_chain_analyst' | 'compliance_officer' | 'regional_manager';
   status: 'online' | 'busy' | 'offline' | 'away';
   location: string;
   currentTask: string;
@@ -47,6 +52,13 @@ interface TeamMember {
   contact: {
     phone: string;
     email: string;
+  };
+  permissions: {
+    viewData: boolean;
+    editData: boolean;
+    approveActions: boolean;
+    exportReports: boolean;
+    manageSuppliers: boolean;
   };
 }
 
@@ -122,7 +134,8 @@ export function TeamCoordination() {
       avatar: '👨‍✈️',
       lastSeen: 'Active now',
       performance: 94,
-      contact: { phone: '+1-555-0123', email: 'john.smith@company.com' }
+      contact: { phone: '+1-555-0123', email: 'john.smith@company.com' },
+      permissions: { viewData: true, editData: false, approveActions: false, exportReports: false, manageSuppliers: false }
     },
     {
       id: '2',
@@ -134,31 +147,34 @@ export function TeamCoordination() {
       avatar: '👩‍✈️',
       lastSeen: '5 min ago',
       performance: 91,
-      contact: { phone: '+1-555-0124', email: 'sarah.chen@company.com' }
+      contact: { phone: '+1-555-0124', email: 'sarah.chen@company.com' },
+      permissions: { viewData: true, editData: false, approveActions: false, exportReports: false, manageSuppliers: false }
     },
     {
       id: '3',
       name: 'Mike Johnson',
-      role: 'logistics',
+      role: 'operations_manager',
       status: 'online',
       location: 'Distribution Center B',
       currentTask: 'Route Planning',
       avatar: '👨‍💼',
       lastSeen: 'Active now',
       performance: 88,
-      contact: { phone: '+1-555-0125', email: 'mike.johnson@company.com' }
+      contact: { phone: '+1-555-0125', email: 'mike.johnson@company.com' },
+      permissions: { viewData: true, editData: true, approveActions: true, exportReports: true, manageSuppliers: false }
     },
     {
       id: '4',
       name: 'Lisa Wang',
-      role: 'supplier',
+      role: 'supply_chain_analyst',
       status: 'online',
       location: 'Supplier Office',
       currentTask: 'Order Processing',
       avatar: '👩‍💼',
       lastSeen: 'Active now',
       performance: 96,
-      contact: { phone: '+1-555-0126', email: 'lisa.wang@supplier.com' }
+      contact: { phone: '+1-555-0126', email: 'lisa.wang@supplier.com' },
+      permissions: { viewData: true, editData: false, approveActions: false, exportReports: true, manageSuppliers: false }
     },
     {
       id: '5',
@@ -170,7 +186,47 @@ export function TeamCoordination() {
       avatar: '👨‍🔧',
       lastSeen: '15 min ago',
       performance: 87,
-      contact: { phone: '+1-555-0127', email: 'robert.davis@company.com' }
+      contact: { phone: '+1-555-0127', email: 'robert.davis@company.com' },
+      permissions: { viewData: true, editData: true, approveActions: false, exportReports: false, manageSuppliers: false }
+    },
+    {
+      id: '6',
+      name: 'Emily Roberts',
+      role: 'super_admin',
+      status: 'online',
+      location: 'HQ',
+      currentTask: 'System Administration',
+      avatar: '👩‍💼',
+      lastSeen: 'Active now',
+      performance: 98,
+      contact: { phone: '+1-555-0128', email: 'emily.roberts@company.com' },
+      permissions: { viewData: true, editData: true, approveActions: true, exportReports: true, manageSuppliers: true }
+    },
+    {
+      id: '7',
+      name: 'David Kim',
+      role: 'compliance_officer',
+      status: 'online',
+      location: 'HQ',
+      currentTask: 'Compliance Review',
+      avatar: '👨‍💼',
+      lastSeen: 'Active now',
+      performance: 95,
+      contact: { phone: '+1-555-0129', email: 'david.kim@company.com' },
+      permissions: { viewData: true, editData: true, approveActions: true, exportReports: true, manageSuppliers: true }
+    },
+    {
+      id: '8',
+      name: 'Anna Martinez',
+      role: 'regional_manager',
+      status: 'online',
+      location: 'Europe Office',
+      currentTask: 'Regional Operations',
+      avatar: '👩‍💼',
+      lastSeen: 'Active now',
+      performance: 92,
+      contact: { phone: '+1-555-0130', email: 'anna.martinez@company.com' },
+      permissions: { viewData: true, editData: true, approveActions: true, exportReports: true, manageSuppliers: false }
     }
   ]);
 

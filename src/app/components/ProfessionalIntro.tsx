@@ -166,7 +166,7 @@ export function ProfessionalIntro({ onProceed }: ProfessionalIntroProps) {
                 <Package className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-[#00F5C4] to-[#00D4A8] bg-clip-text text-transparent">
-                Supply Chain AI System
+                LogiCortex AI Global System
               </span>
             </div>
             
@@ -384,7 +384,7 @@ export function ProfessionalIntro({ onProceed }: ProfessionalIntroProps) {
               Trusted by Industry Leaders
             </h2>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-              See what our customers have to say about their experience with Supply Chain AI System
+              See what our customers have to say about their experience with LogiCortex AI Global System
             </p>
           </motion.div>
 
@@ -432,7 +432,7 @@ export function ProfessionalIntro({ onProceed }: ProfessionalIntroProps) {
               Ready to Transform Your Supply Chain?
             </h2>
             <p className="text-lg text-slate-300 mb-8">
-              Join thousands of companies that trust Supply Chain AI System for their logistics operations
+              Join thousands of companies that trust LogiCortex AI Global System for their logistics operations
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
@@ -467,7 +467,7 @@ export function ProfessionalIntro({ onProceed }: ProfessionalIntroProps) {
                   <Package className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-[#00F5C4] to-[#00D4A8] bg-clip-text text-transparent">
-                  Supply Chain AI System
+                  LogiCortex AI Global System
                 </span>
               </div>
               <p className="text-slate-400 text-sm">
@@ -512,7 +512,7 @@ export function ProfessionalIntro({ onProceed }: ProfessionalIntroProps) {
           </div>
           
           <div className="border-t border-slate-800/50 mt-8 pt-8 text-center text-slate-400 text-sm">
-            <p>&copy; 2024 Supply Chain AI System. All rights reserved.</p>
+            <p>&copy; 2026 LogiCortex AI Global System. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Shield, 
-  Clock, 
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Shield,
+  Clock,
   Activity,
   Bell,
   Settings,
@@ -26,7 +26,8 @@ import {
   CheckCircle,
   AlertTriangle,
   Eye,
-  Smartphone
+  Smartphone,
+  Languages
 } from 'lucide-react';
 
 export function AdminProfile() {
@@ -37,6 +38,8 @@ export function AdminProfile() {
   const [smsAlerts, setSmsAlerts] = useState(false);
   const [inAppAlerts, setInAppAlerts] = useState(true);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState('English (US)');
+  const [selectedTimezone, setSelectedTimezone] = useState('Eastern Time (EST)');
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   // State for action dialogs
@@ -50,7 +53,7 @@ export function AdminProfile() {
   const [profileData, setProfileData] = useState({
     fullName: 'John Davidson',
     jobTitle: 'Supply Chain Manager',
-    company: 'SmartChain Logistics International',
+    company: 'LogiCortex Logistics International',
     email: 'john.davidson@smartchain.ai',
     phone: '+1 (555) 123-4567',
     location: 'North America Region'
@@ -321,7 +324,7 @@ export function AdminProfile() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
                     <span className="text-slate-400">Company</span>
-                    <span className="text-white font-medium">SmartChain Logistics</span>
+                    <span className="text-white font-medium">LogiCortex Logistics</span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
                     <span className="text-slate-400">Department</span>
@@ -977,7 +980,10 @@ export function AdminProfile() {
                 <div className="space-y-4">
                   <div className="p-4 bg-slate-700/30 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-white font-medium">Layout Preference</span>
+                      <div className="flex items-center gap-2">
+                        <BarChart3 className="w-4 h-4 text-[#00F5C4]" />
+                        <span className="text-white font-medium">Layout Preference</span>
+                      </div>
                     </div>
                     <div className="flex gap-2">
                       {['Compact', 'Standard', 'Expanded'].map((layout) => (
@@ -985,7 +991,7 @@ export function AdminProfile() {
                           key={layout}
                           className={`px-3 py-1 rounded text-sm transition-all ${
                             layout === 'Standard'
-                              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                              ? 'bg-[#00F5C4]/20 text-[#00F5C4] border border-[#00F5C4]/30'
                               : 'bg-slate-600/50 text-slate-400 hover:text-white'
                           }`}
                         >
@@ -997,10 +1003,13 @@ export function AdminProfile() {
 
                   <div className="p-4 bg-slate-700/30 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-white font-medium">Default Map View</span>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-[#00F5C4]" />
+                        <span className="text-white font-medium">Default Map View</span>
+                      </div>
                     </div>
-                    <select 
-                      className="w-full bg-slate-600/50 text-white rounded-lg px-3 py-2 border border-slate-600/30"
+                    <select
+                      className="w-full bg-slate-600/50 text-white rounded-lg px-3 py-2 border border-slate-600/30 focus:outline-none focus:border-[#00F5C4]"
                       aria-label="Default Map View"
                     >
                       <option>North America</option>
@@ -1026,7 +1035,7 @@ export function AdminProfile() {
                     <button
                       onClick={() => setDarkMode(!darkMode)}
                       className={`w-12 h-6 rounded-full transition-colors ${
-                        darkMode ? 'bg-green-500' : 'bg-slate-600'
+                        darkMode ? 'bg-[#00F5C4]' : 'bg-slate-600'
                       }`}
                       aria-label={darkMode ? 'Disable dark mode' : 'Enable dark mode'}
                     >
@@ -1038,28 +1047,85 @@ export function AdminProfile() {
 
                   <div className="p-4 bg-slate-700/30 rounded-lg">
                     <label htmlFor="language-select" className="flex items-center justify-between mb-2">
-                      <span className="text-white font-medium">Language</span>
+                      <div className="flex items-center gap-2">
+                        <Languages className="w-4 h-4 text-[#00F5C4]" />
+                        <span className="text-white font-medium">Language</span>
+                      </div>
                     </label>
-                    <select id="language-select" className="w-full bg-slate-600/50 text-white rounded-lg px-3 py-2 border border-slate-600/30">
+                    <select
+                      id="language-select"
+                      value={selectedLanguage}
+                      onChange={(e) => setSelectedLanguage(e.target.value)}
+                      className="w-full bg-slate-600/50 text-white rounded-lg px-3 py-2 border border-slate-600/30 focus:outline-none focus:border-[#00F5C4]"
+                    >
                       <option>English (US)</option>
-                      <option>Spanish</option>
-                      <option>French</option>
-                      <option>German</option>
+                      <option>English (UK)</option>
+                      <option>Spanish (ES)</option>
+                      <option>Spanish (MX)</option>
+                      <option>French (FR)</option>
+                      <option>French (CA)</option>
+                      <option>German (DE)</option>
+                      <option>Italian (IT)</option>
+                      <option>Portuguese (BR)</option>
+                      <option>Portuguese (PT)</option>
+                      <option>Dutch (NL)</option>
+                      <option>Chinese (Simplified)</option>
+                      <option>Chinese (Traditional)</option>
+                      <option>Japanese (JP)</option>
+                      <option>Korean (KO)</option>
+                      <option>Arabic (SA)</option>
+                      <option>Hindi (IN)</option>
+                      <option>Russian (RU)</option>
+                      <option>Turkish (TR)</option>
+                      <option>Polish (PL)</option>
+                      <option>Swedish (SE)</option>
+                      <option>Norwegian (NO)</option>
+                      <option>Danish (DK)</option>
+                      <option>Finnish (FI)</option>
+                      <option>Greek (GR)</option>
+                      <option>Thai (TH)</option>
+                      <option>Vietnamese (VN)</option>
+                      <option>Indonesian (ID)</option>
+                      <option>Malay (MY)</option>
+                      <option>Tagalog (PH)</option>
                     </select>
                   </div>
 
                   <div className="p-4 bg-slate-700/30 rounded-lg">
                     <label htmlFor="timezone-select" className="flex items-center justify-between mb-2">
-                      <span className="text-white font-medium">Timezone</span>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-[#00F5C4]" />
+                        <span className="text-white font-medium">Timezone</span>
+                      </div>
                     </label>
-                    <select id="timezone-select" className="w-full bg-slate-600/50 text-white rounded-lg px-3 py-2 border border-slate-600/30">
+                    <select
+                      id="timezone-select"
+                      value={selectedTimezone}
+                      onChange={(e) => setSelectedTimezone(e.target.value)}
+                      className="w-full bg-slate-600/50 text-white rounded-lg px-3 py-2 border border-slate-600/30 focus:outline-none focus:border-[#00F5C4]"
+                    >
                       <option>Eastern Time (EST)</option>
                       <option>Central Time (CST)</option>
                       <option>Pacific Time (PST)</option>
                       <option>UTC</option>
+                      <option>GMT</option>
+                      <option>Central European Time (CET)</option>
+                      <option>Eastern European Time (EET)</option>
+                      <option>India Standard Time (IST)</option>
+                      <option>China Standard Time (CST)</option>
+                      <option>Japan Standard Time (JST)</option>
+                      <option>Australian Eastern Time (AET)</option>
                     </select>
                   </div>
                 </div>
+              </div>
+
+              {/* Save Button */}
+              <div className="flex justify-end">
+                <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00F5C4] to-[#00D4A8] text-slate-900 rounded-lg font-semibold hover:from-[#00D4A8] hover:to-[#00C0A0] transition-all">
+                  <Save className="w-4 h-4" />
+                  Save Preferences
+                </button>
               </div>
             </div>
           </motion.div>

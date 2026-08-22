@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Brain, 
-  Route, 
-  Users, 
-  Package, 
-  CheckCircle, 
-  XCircle, 
+import {
+  Brain,
+  Route,
+  Users,
+  Package,
+  CheckCircle,
+  XCircle,
   X,
-  AlertTriangle, 
+  AlertTriangle,
   TrendingUp,
   MapPin,
   Truck,
@@ -27,7 +27,11 @@ import {
   Search,
   Filter,
   ChevronDown,
-  Plus
+  Plus,
+  Clock,
+  Shield,
+  Wrench,
+  History
 } from 'lucide-react';
 import { AdminSimulation } from './AdminSimulation';
 import { AdvancedAnalytics } from './AdvancedAnalytics';
@@ -107,8 +111,29 @@ interface InventoryItem {
   lastUpdated: string;
 }
 
+interface AIAction {
+  id: string;
+  priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  problem: string;
+  aiRecommendation: string;
+  confidence: number;
+  status: 'pending' | 'approved' | 'rejected' | 'executed';
+  timestamp: string;
+}
+
+interface DecisionHistory {
+  id: string;
+  recommendation: string;
+  aiConfidence: number;
+  adminDecision: string;
+  executionStatus: string;
+  timestamp: string;
+}
+
 export function AdminControls() {
-  const [activeTab, setActiveTab] = useState<'ai-decisions' | 'routing' | 'resources' | 'inventory-management' | 'disruptions' | 'cost-optimization' | 'simulation' | 'coordination' | 'analytics' | 'optimization'>('ai-decisions');
+  const [activeTab, setActiveTab] = useState<'ai-decisions' | 'routing' | 'resources' | 'inventory-management' | 'disruptions' | 'cost-optimization' | 'simulation' | 'coordination' | 'analytics' | 'optimization' | 'ai-action-center' | 'enterprise-integration'>('ai-decisions');
+  const [showActionCenter, setShowActionCenter] = useState(false);
+  const [selectedAction, setSelectedAction] = useState<AIAction | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<'all' | 'driver' | 'vehicle'>('all');
   const [availabilityFilter, setAvailabilityFilter] = useState<'all' | 'available' | 'busy' | 'maintenance'>('all');
@@ -375,6 +400,63 @@ export function AdminControls() {
     }
   ]);
 
+  const [aiActions, setAiActions] = useState<AIAction[]>([
+    {
+      id: 'ACT001',
+      priority: 'CRITICAL',
+      problem: 'Europe warehouse stock decreasing',
+      aiRecommendation: 'Increase inventory by 15%',
+      confidence: 93,
+      status: 'pending',
+      timestamp: '2 hours ago'
+    },
+    {
+      id: 'ACT002',
+      priority: 'HIGH',
+      problem: 'Supplier XYZ Components delivery reliability decreasing',
+      aiRecommendation: 'Shift 20% allocation to backup supplier',
+      confidence: 88,
+      status: 'pending',
+      timestamp: '4 hours ago'
+    },
+    {
+      id: 'ACT003',
+      priority: 'MEDIUM',
+      problem: 'Route R-001 showing consistent delays',
+      aiRecommendation: 'Implement alternative route scheduling',
+      confidence: 76,
+      status: 'pending',
+      timestamp: '6 hours ago'
+    }
+  ]);
+
+  const [decisionHistory, setDecisionHistory] = useState<DecisionHistory[]>([
+    {
+      id: 'DH001',
+      recommendation: 'Change route for shipment SH-2852',
+      aiConfidence: 92,
+      adminDecision: 'Approved',
+      executionStatus: 'Completed',
+      timestamp: '1 hour ago'
+    },
+    {
+      id: 'DH002',
+      recommendation: 'Increase inventory at warehouse EU-001',
+      aiConfidence: 87,
+      adminDecision: 'Approved',
+      executionStatus: 'In Progress',
+      timestamp: '3 hours ago'
+    },
+    {
+      id: 'DH003',
+      recommendation: 'Reduce allocation to supplier SUP-1048',
+      aiConfidence: 78,
+      adminDecision: 'Rejected',
+      executionStatus: 'Cancelled',
+      timestamp: '5 hours ago'
+    }
+  ]);
+
   const handleAIDecision = (decisionId: string, action: 'approve' | 'reject') => {
     setAIDecisions(prev => prev.map(decision => 
       decision.id === decisionId 
@@ -526,12 +608,14 @@ export function AdminControls() {
 
   const tabs = [
     { id: 'ai-decisions' as const, name: 'AI Decisions', icon: Brain, count: aiDecisions.filter(d => d.status === 'pending').length },
+    { id: 'ai-action-center' as const, name: 'AI Action Center™', icon: Zap, count: aiActions.filter(a => a.status === 'pending').length },
+    { id: 'enterprise-integration' as const, name: 'Enterprise Integration™', icon: Shield, count: 0 },
     { id: 'routing' as const, name: 'Manual Routing', icon: Route, count: shipmentRoutes.filter(r => r.status === 'proposed').length },
     { id: 'resources' as const, name: 'Resources', icon: Users, count: resources.filter(r => r.availability === 'available').length },
     { id: 'inventory-management' as const, name: 'Inventory', icon: Package, count: inventory.filter(i => i.urgency === 'high').length },
     { id: 'disruptions' as const, name: 'Disruptions', icon: AlertTriangle, count: disruptionAlerts.filter(d => d.status === 'active').length },
     { id: 'cost-optimization' as const, name: 'Cost Control', icon: TrendingUp, count: costOptimizations.filter(c => c.status === 'suggested').length },
-    { id: 'simulation' as const, name: 'Simulation', icon: Zap, count: 0 },
+    { id: 'simulation' as const, name: 'Simulation', icon: Activity, count: 0 },
     { id: 'analytics' as const, name: 'Analytics', icon: BarChart3, count: 0 }
   ];
 
@@ -647,6 +731,312 @@ export function AdminControls() {
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+        )}
+
+        {activeTab === 'ai-action-center' && (
+          <motion.div
+            key="ai-action-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                <Zap className="w-5 h-5 text-[#00F5C4]" />
+                AI Action Center™
+              </h3>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-400">AI predictions → Actions</span>
+              </div>
+            </div>
+
+            {aiActions.filter(a => a.status === 'pending').map((action) => (
+              <motion.div
+                key={action.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className={`bg-slate-800/50 rounded-lg p-4 border ${
+                  action.priority === 'CRITICAL' ? 'border-red-500/50' :
+                  action.priority === 'HIGH' ? 'border-orange-500/50' :
+                  action.priority === 'MEDIUM' ? 'border-yellow-500/50' :
+                  'border-slate-700/50'
+                }`}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <AlertTriangle className={`w-5 h-5 ${
+                      action.priority === 'CRITICAL' ? 'text-red-400' :
+                      action.priority === 'HIGH' ? 'text-orange-400' :
+                      action.priority === 'MEDIUM' ? 'text-yellow-400' :
+                      'text-slate-400'
+                    }`} />
+                    <div>
+                      <h3 className="text-white font-medium">{action.problem}</h3>
+                      <p className="text-slate-400 text-sm">{action.timestamp}</p>
+                    </div>
+                  </div>
+                  <span className={`px-2 py-1 rounded text-xs ${
+                    action.priority === 'CRITICAL' ? 'bg-red-500/20 text-red-400' :
+                    action.priority === 'HIGH' ? 'bg-orange-500/20 text-orange-400' :
+                    action.priority === 'MEDIUM' ? 'bg-yellow-500/20 text-yellow-400' :
+                    'bg-slate-500/20 text-slate-400'
+                  }`}>
+                    {action.priority}
+                  </span>
+                </div>
+
+                <div className="mb-3">
+                  <div className="text-sm text-slate-400 mb-1">AI Recommendation</div>
+                  <div className="text-white font-medium">{action.aiRecommendation}</div>
+                </div>
+
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-slate-400">Confidence:</span>
+                    <span className="text-sm font-bold text-[#00F5C4]">{action.confidence}%</span>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button className="flex-1 px-4 py-2 bg-[#00F5C4] text-slate-900 rounded-lg hover:bg-[#00D4A8] transition-colors font-semibold">
+                    Approve
+                  </button>
+                  <button className="flex-1 px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors">
+                    Modify
+                  </button>
+                  <button className="flex-1 px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors">
+                    Reject
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Decision History */}
+            <div className="mt-6">
+              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <History className="w-4 h-4 text-[#00F5C4]" />
+                AI Decision History
+              </h4>
+              <div className="space-y-2">
+                {decisionHistory.map((history) => (
+                  <div key={history.id} className="bg-slate-700/30 rounded-lg p-3 border border-slate-600">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <div className="text-sm text-white font-medium">{history.recommendation}</div>
+                        <div className="text-xs text-slate-400">{history.timestamp}</div>
+                      </div>
+                      <span className={`text-xs px-2 py-1 rounded ${
+                        history.adminDecision === 'Approved' ? 'bg-green-500/20 text-green-400' :
+                        history.adminDecision === 'Rejected' ? 'bg-red-500/20 text-red-400' :
+                        'bg-yellow-500/20 text-yellow-400'
+                      }`}>
+                        {history.adminDecision}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      <div>
+                        <span className="text-slate-400">AI Confidence: </span>
+                        <span className="text-slate-300">{history.aiConfidence}%</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400">Status: </span>
+                        <span className="text-slate-300">{history.executionStatus}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {activeTab === 'enterprise-integration' && (
+          <motion.div
+            key="enterprise-integration"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                <Shield className="w-5 h-5 text-[#00F5C4]" />
+                Enterprise Integration Hub™
+              </h3>
+              <div className="flex items-center gap-2 text-xs text-slate-400">
+                <span>Connect with existing business systems</span>
+              </div>
+            </div>
+
+            {/* Integration Dashboard */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-blue-400" />
+                    <span className="text-sm font-medium text-white">SAP ERP</span>
+                  </div>
+                  <span className="text-xs text-green-400 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    Connected ✓
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Last Sync:</span>
+                    <span className="text-white">2 minutes ago</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Data Sharing:</span>
+                    <span className="text-white">Inventory, Orders, Supplier Data</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Uptime:</span>
+                    <span className="text-green-400">99.8%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-purple-400" />
+                    <span className="text-sm font-medium text-white">GPS Platform</span>
+                  </div>
+                  <span className="text-xs text-green-400 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    Connected ✓
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Last Sync:</span>
+                    <span className="text-white">1 minute ago</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Data:</span>
+                    <span className="text-white">Vehicle Location, Route Data</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Uptime:</span>
+                    <span className="text-green-400">98.9%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Warehouse className="w-5 h-5 text-orange-400" />
+                    <span className="text-sm font-medium text-white">WMS Platform</span>
+                  </div>
+                  <span className="text-xs text-green-400 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    Connected ✓
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Last Sync:</span>
+                    <span className="text-white">5 minutes ago</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Data:</span>
+                    <span className="text-white">Inventory, Storage, Capacity</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Uptime:</span>
+                    <span className="text-green-400">99.2%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Truck className="w-5 h-5 text-cyan-400" />
+                    <span className="text-sm font-medium text-white">TMS Platform</span>
+                  </div>
+                  <span className="text-xs text-yellow-400 flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3" />
+                    Warning
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Last Sync:</span>
+                    <span className="text-white">15 minutes ago</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Data:</span>
+                    <span className="text-white">Shipments, Routes, Fleet</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Uptime:</span>
+                    <span className="text-yellow-400">92.5%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* API Health Dashboard */}
+            <div className="bg-slate-700/30 rounded-lg p-4 border border-slate-600">
+              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-[#00F5C4]" />
+                API Health Dashboard
+              </h4>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">ERP Connection</div>
+                  <div className="text-lg font-bold text-green-400">99.8%</div>
+                  <div className="text-xs text-slate-400">uptime</div>
+                </div>
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">GPS Connection</div>
+                  <div className="text-lg font-bold text-green-400">98.9%</div>
+                  <div className="text-xs text-slate-400">uptime</div>
+                </div>
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">Supplier API</div>
+                  <div className="text-lg font-bold text-yellow-400">87.2%</div>
+                  <div className="text-xs text-slate-400">uptime</div>
+                </div>
+              </div>
+              <div className="mt-3 bg-yellow-500/10 rounded-lg p-3 border border-yellow-500/30">
+                <div className="text-xs text-slate-400 mb-1">AI Recommendation</div>
+                <div className="text-sm text-yellow-400">"Reconnect supplier API before next synchronization cycle."</div>
+              </div>
+            </div>
+
+            {/* Data Security */}
+            <div className="bg-slate-700/30 rounded-lg p-4 border border-slate-600">
+              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <Lock className="w-4 h-4 text-[#00F5C4]" />
+                Data Security Status
+              </h4>
+              <div className="grid grid-cols-4 gap-4">
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">Encryption</div>
+                  <div className="text-sm font-bold text-green-400">Active ✓</div>
+                </div>
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">API Auth</div>
+                  <div className="text-sm font-bold text-green-400">Verified ✓</div>
+                </div>
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">Access Control</div>
+                  <div className="text-sm font-bold text-green-400">Enabled ✓</div>
+                </div>
+                <div className="bg-slate-800/50 rounded p-3">
+                  <div className="text-xs text-slate-400 mb-1">Data Privacy</div>
+                  <div className="text-sm font-bold text-green-400">Protected ✓</div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
 

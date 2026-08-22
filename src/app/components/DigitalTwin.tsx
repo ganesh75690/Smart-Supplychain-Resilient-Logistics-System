@@ -1,4 +1,4 @@
-import { Cpu, Layers, Network, Zap, TrendingUp, Activity, MapPin, AlertTriangle, Play, Pause, RefreshCw, Navigation, BarChart3, Wind, CloudRain, Car } from 'lucide-react';
+import { Cpu, Layers, Network, Zap, TrendingUp, Activity, MapPin, AlertTriangle, Play, Pause, RefreshCw, Navigation, BarChart3, Wind, CloudRain, Car, Thermometer, Battery, Gauge, Package, Settings, Wifi, Droplets, Shield } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle } from 'react-leaflet';
@@ -51,11 +51,38 @@ interface SimulationScenario {
   id: string;
   name: string;
   description: string;
+  type: 'supplier' | 'transportation' | 'warehouse' | 'demand' | 'vehicle' | 'disaster';
   impact: {
     delayIncrease: number;
     costImpact: number;
     riskLevel: 'low' | 'medium' | 'high';
   };
+}
+
+interface CrisisSimulation {
+  id: string;
+  scenario: string;
+  affectedShipments: number;
+  expectedDelay: number;
+  costImpact: string;
+  affectedRegions: string;
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  recoveryRecommendations: string[];
+  recoveryConfidence: number;
+}
+
+interface TimelineEvent {
+  day: number;
+  event: string;
+  impact: string;
+}
+
+interface WhatIfOption {
+  id: string;
+  name: string;
+  description: string;
+  delay: number;
+  cost: string;
 }
 
 const shipments: Shipment[] = [
@@ -166,33 +193,127 @@ const riskZones: RiskZone[] = [
 const simulationScenarios: SimulationScenario[] = [
   {
     id: 'SIM001',
-    name: 'Road Blockage',
-    description: 'What if Highway 101 is blocked?',
+    name: 'Supplier Failure',
+    description: 'Supplier unavailable for 14 days',
+    type: 'supplier',
     impact: {
       delayIncrease: 45,
-      costImpact: 12.5,
+      costImpact: 120,
       riskLevel: 'high'
     }
   },
   {
     id: 'SIM002',
-    name: 'Demand Surge',
-    description: 'What if demand increases by 40%?',
+    name: 'Transportation Disruption',
+    description: 'Major route blocked for 7 days',
+    type: 'transportation',
     impact: {
-      delayIncrease: 25,
-      costImpact: 8.3,
-      riskLevel: 'medium'
+      delayIncrease: 35,
+      costImpact: 85,
+      riskLevel: 'high'
     }
   },
   {
     id: 'SIM003',
-    name: 'Fuel Price Increase',
-    description: 'What if fuel prices rise 30%?',
+    name: 'Warehouse Failure',
+    description: 'Regional warehouse unavailable',
+    type: 'warehouse',
     impact: {
-      delayIncrease: 5,
-      costImpact: 18.7,
-      riskLevel: 'low'
+      delayIncrease: 25,
+      costImpact: 65,
+      riskLevel: 'medium'
     }
+  },
+  {
+    id: 'SIM004',
+    name: 'Demand Surge',
+    description: 'Demand increases by 50%',
+    type: 'demand',
+    impact: {
+      delayIncrease: 30,
+      costImpact: 95,
+      riskLevel: 'high'
+    }
+  },
+  {
+    id: 'SIM005',
+    name: 'Vehicle Shortage',
+    description: '30% fleet unavailable',
+    type: 'vehicle',
+    impact: {
+      delayIncrease: 40,
+      costImpact: 110,
+      riskLevel: 'high'
+    }
+  },
+  {
+    id: 'SIM006',
+    name: 'Natural Disaster',
+    description: 'Regional logistics disruption',
+    type: 'disaster',
+    impact: {
+      delayIncrease: 55,
+      costImpact: 150,
+      riskLevel: 'high'
+    }
+  }
+];
+
+const crisisSimulations: CrisisSimulation[] = [
+  {
+    id: 'CRISIS001',
+    scenario: 'Supplier A unavailable for 14 days',
+    affectedShipments: 2480,
+    expectedDelay: 4.2,
+    costImpact: '$1.8M',
+    affectedRegions: 'Asia Pacific',
+    riskLevel: 'HIGH',
+    recoveryRecommendations: [
+      'Activate backup supplier',
+      'Redistribute inventory',
+      'Optimize transport routes',
+      'Increase safety stock'
+    ],
+    recoveryConfidence: 94
+  },
+  {
+    id: 'CRISIS002',
+    scenario: 'Major route blocked for 7 days',
+    affectedShipments: 1850,
+    expectedDelay: 3.8,
+    costImpact: '$1.2M',
+    affectedRegions: 'North America',
+    riskLevel: 'MEDIUM',
+    recoveryRecommendations: [
+      'Reroute through alternative corridors',
+      'Increase lead time buffer',
+      'Activate contingency carriers'
+    ],
+    recoveryConfidence: 87
+  }
+];
+
+const timelineEvents: TimelineEvent[] = [
+  { day: 1, event: 'Initial disruption', impact: 'Supply chain begins showing pressure' },
+  { day: 5, event: 'Inventory pressure increases', impact: 'Safety stock levels dropping' },
+  { day: 10, event: 'Delivery delays begin', impact: 'Customer SLA at risk' },
+  { day: 14, event: 'Recovery required', impact: 'Critical intervention needed' }
+];
+
+const whatIfOptions: WhatIfOption[] = [
+  {
+    id: 'OPTA',
+    name: 'No Intervention',
+    description: 'Let disruption run its course',
+    delay: 8,
+    cost: '$2.4M'
+  },
+  {
+    id: 'OPTB',
+    name: 'AI Recommended Action',
+    description: 'Implement recovery strategy',
+    delay: 2,
+    cost: '$1.8M'
   }
 ];
 
@@ -227,6 +348,10 @@ export function DigitalTwin() {
   const [selectedShipment, setSelectedShipment] = useState<string | null>(null);
   const [isSimulationRunning, setIsSimulationRunning] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<string | null>(null);
+  const [selectedCrisis, setSelectedCrisis] = useState<string | null>(null);
+  const [showCrisisSimulation, setShowCrisisSimulation] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
+  const [selectedWhatIf, setSelectedWhatIf] = useState<string | null>(null);
   const [animatedPositions, setAnimatedPositions] = useState<{[key: string]: {lat: number, lng: number}}>({});
   const mapRef = useRef<any>(null);
 
@@ -646,6 +771,299 @@ export function DigitalTwin() {
               }`}>
                 {selectedScenario ? simulationScenarios.find(s => s.id === selectedScenario)?.impact.riskLevel?.toUpperCase() : 'LOW'}
               </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* GLOBAL CRISIS SIMULATION ENGINE™ */}
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700/50">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-[#00F5C4]" />
+            Global Crisis Simulation Engine™
+          </h3>
+          <button
+            onClick={() => setShowCrisisSimulation(!showCrisisSimulation)}
+            className="flex items-center gap-2 px-3 py-2 bg-[#00F5C4]/10 border border-[#00F5C4]/30 rounded-lg text-[#00F5C4] text-sm hover:bg-[#00F5C4]/20 transition-colors"
+          >
+            <Play className="w-4 h-4" />
+            Run Simulation
+          </button>
+        </div>
+
+        {showCrisisSimulation && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            {/* Crisis Simulation Result */}
+            {selectedCrisis && (() => {
+              const crisis = crisisSimulations.find(c => c.id === selectedCrisis);
+              if (!crisis) return null;
+              return (
+                <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-red-400" />
+                    Crisis Simulation Result
+                  </h4>
+                  <div className="mb-4">
+                    <div className="text-sm text-slate-400 mb-1">Scenario</div>
+                    <div className="text-white font-medium">{crisis.scenario}</div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                    <div className="bg-slate-800/50 rounded-lg p-3">
+                      <div className="text-xs text-slate-400 mb-1">Affected Shipments</div>
+                      <div className="text-lg font-bold text-white">{crisis.affectedShipments.toLocaleString()}</div>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-3">
+                      <div className="text-xs text-slate-400 mb-1">Expected Delay</div>
+                      <div className="text-lg font-bold text-yellow-400">{crisis.expectedDelay} days</div>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-3">
+                      <div className="text-xs text-slate-400 mb-1">Cost Impact</div>
+                      <div className="text-lg font-bold text-red-400">{crisis.costImpact}</div>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-3">
+                      <div className="text-xs text-slate-400 mb-1">Risk Level</div>
+                      <div className={`text-lg font-bold ${
+                        crisis.riskLevel === 'HIGH' ? 'text-red-400' :
+                        crisis.riskLevel === 'MEDIUM' ? 'text-yellow-400' :
+                        'text-green-400'
+                      }`}>{crisis.riskLevel}</div>
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="text-sm text-slate-400 mb-1">Affected Regions</div>
+                    <div className="text-white">{crisis.affectedRegions}</div>
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="text-sm text-slate-400 mb-2">AI Recovery Recommendation</div>
+                    <ul className="space-y-1">
+                      {crisis.recoveryRecommendations.map((rec, idx) => (
+                        <li key={idx} className="text-sm text-slate-300 flex items-start gap-2">
+                          <span className="text-[#00F5C4]">•</span>
+                          {rec}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 bg-[#00F5C4]/10 rounded-lg border border-[#00F5C4]/30">
+                    <span className="text-sm text-slate-400">Recovery Confidence</span>
+                    <span className="text-lg font-bold text-[#00F5C4]">{crisis.recoveryConfidence}%</span>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Future Timeline View */}
+            <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-white font-semibold flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#00F5C4]" />
+                  Future Timeline Prediction
+                </h4>
+                <button
+                  onClick={() => setShowTimeline(!showTimeline)}
+                  className="text-xs text-slate-400 hover:text-white"
+                >
+                  {showTimeline ? 'Hide' : 'Show'}
+                </button>
+              </div>
+
+              {showTimeline && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-3"
+                >
+                  {timelineEvents.map((event, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <div className="w-16 text-center">
+                        <div className="text-sm font-bold text-[#00F5C4]">Day {event.day}</div>
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm text-white font-medium">{event.event}</div>
+                        <div className="text-xs text-slate-400">{event.impact}</div>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="mt-4 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
+                    <div className="text-xs text-yellow-400">
+                      ⚠ Expected future impact if no action is taken.
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            {/* What-If Comparison */}
+            <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+              <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                <Wind className="w-4 h-4 text-[#00F5C4]" />
+                What-If Comparison
+              </h4>
+              <div className="grid grid-cols-2 gap-4">
+                {whatIfOptions.map((option) => (
+                  <motion.div
+                    key={option.id}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => setSelectedWhatIf(option.id)}
+                    className={`p-4 rounded-lg border cursor-pointer transition-all ${
+                      selectedWhatIf === option.id
+                        ? 'bg-[#00F5C4]/10 border-[#00F5C4]/50'
+                        : 'bg-slate-800/30 border-slate-600/30 hover:bg-slate-700/40'
+                    }`}
+                  >
+                    <div className="text-sm font-semibold text-white mb-1">{option.name}</div>
+                    <div className="text-xs text-slate-400 mb-2">{option.description}</div>
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Delay:</span>
+                        <span className="text-white font-medium">{option.delay} days</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Cost:</span>
+                        <span className="text-white font-medium">{option.cost}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              {selectedWhatIf && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-4 p-3 bg-[#00F5C4]/10 rounded-lg border border-[#00F5C4]/30"
+                >
+                  <div className="text-sm text-[#00F5C4] font-medium">
+                    Best Strategy: {selectedWhatIf === 'OPTB' ? 'OPTION B - AI Recommended Action' : 'OPTION A'}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Real-Time IoT Intelligence Layer™ */}
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700/50">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <Wifi className="w-5 h-5 text-[#00F5C4]" />
+            Real-Time IoT Intelligence Layer™
+          </h3>
+          <div className="flex items-center gap-2 text-xs text-slate-400">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            Live Sensor Data
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          {/* Vehicle Digital Health */}
+          <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+            <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <Car className="w-4 h-4 text-[#00F5C4]" />
+              Vehicle Digital Health
+            </h4>
+            <div className="mb-3">
+              <div className="text-xs text-slate-400 mb-1">Vehicle</div>
+              <div className="text-sm font-medium text-white">Truck #245</div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Engine Health</div>
+                <div className="text-lg font-bold text-green-400">92%</div>
+              </div>
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Fuel Level</div>
+                <div className="text-lg font-bold text-yellow-400">72%</div>
+              </div>
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Temperature</div>
+                <div className="text-lg font-bold text-green-400">85°C</div>
+              </div>
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Battery</div>
+                <div className="text-lg font-bold text-green-400">95%</div>
+              </div>
+            </div>
+            <div className="mb-3">
+              <div className="text-xs text-slate-400">Maintenance Status</div>
+              <div className="text-sm text-yellow-400">Due in 15 days</div>
+            </div>
+            <div className="bg-[#00F5C4]/10 rounded-lg p-3 border border-[#00F5C4]/30">
+              <div className="text-xs text-slate-400 mb-1">AI Prediction</div>
+              <div className="text-sm text-[#00F5C4]">"Maintenance required within 15 days to avoid operational failure."</div>
+            </div>
+          </div>
+
+          {/* Cargo Intelligence */}
+          <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+            <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <Package className="w-4 h-4 text-[#00F5C4]" />
+              Cargo Intelligence
+            </h4>
+            <div className="mb-3">
+              <div className="text-xs text-slate-400 mb-1">Shipment</div>
+              <div className="text-sm font-medium text-white">Medical Equipment</div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Temperature</div>
+                <div className="text-lg font-bold text-green-400">4°C ✓</div>
+              </div>
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Humidity</div>
+                <div className="text-lg font-bold text-green-400">45%</div>
+              </div>
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Shock</div>
+                <div className="text-lg font-bold text-green-400">None</div>
+              </div>
+              <div className="bg-slate-800/50 rounded p-2">
+                <div className="text-xs text-slate-400">Condition</div>
+                <div className="text-lg font-bold text-green-400">Safe ✓</div>
+              </div>
+            </div>
+            <div className="mb-3">
+              <div className="text-xs text-slate-400">Risk Level</div>
+              <div className="text-sm text-green-400">Low</div>
+            </div>
+            <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+              <div className="text-xs text-slate-400 mb-1">AI Monitoring</div>
+              <div className="text-sm text-white">Continuous real-time monitoring active</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Warehouse Sensors */}
+        <div className="mt-4 bg-slate-700/30 rounded-lg p-4 border border-slate-600">
+          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+            <Warehouse className="w-4 h-4 text-[#00F5C4]" />
+            Warehouse Sensor Network
+          </h4>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="bg-slate-800/50 rounded p-3">
+              <div className="text-xs text-slate-400 mb-1">Storage Condition</div>
+              <div className="text-sm font-bold text-green-400">Optimal ✓</div>
+            </div>
+            <div className="bg-slate-800/50 rounded p-3">
+              <div className="text-xs text-slate-400 mb-1">Capacity</div>
+              <div className="text-sm font-bold text-yellow-400">78%</div>
+            </div>
+            <div className="bg-slate-800/50 rounded p-3">
+              <div className="text-xs text-slate-400 mb-1">Environment</div>
+              <div className="text-sm font-bold text-green-400">Stable ✓</div>
+            </div>
+            <div className="bg-slate-800/50 rounded p-3">
+              <div className="text-xs text-slate-400 mb-1">Alerts</div>
+              <div className="text-sm font-bold text-green-400">None</div>
             </div>
           </div>
         </div>

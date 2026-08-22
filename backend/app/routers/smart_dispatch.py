@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import asyncio
 from pydantic import BaseModel
 
-from app.database.postgres import get_db
+from app.database.postgres import get_postgres_session
 from app.services.ai_dispatch_service import AIDispatchService
 from app.services.driver_service import DriverService
 from app.services.notification_service import NotificationService

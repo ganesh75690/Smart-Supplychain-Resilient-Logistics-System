@@ -1,4 +1,4 @@
-import { TrendingUp, Package, AlertTriangle, BarChart3, Calendar, Bell, Settings, LogOut, Truck, Menu, X, User, Camera, Upload, Brain, Calculator, Map, Activity, CheckCircle, Clock, Zap, RefreshCw, Users, MessageCircle, DollarSign, TrendingDown, Info, Shield, Database, Wifi, WifiOff } from 'lucide-react';
+import { TrendingUp, Package, AlertTriangle, BarChart3, Calendar, Bell, Settings, LogOut, Truck, Menu, X, User, Camera, Upload, Brain, Calculator, Map, Activity, CheckCircle, Clock, Zap, RefreshCw, Users, MessageCircle, DollarSign, TrendingDown, Info, Shield, Database, Wifi, WifiOff, Globe, Network, PackageCheck, Languages, ChevronDown, ShieldCheck, FileText, Globe2 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
@@ -13,7 +13,14 @@ import AnalyticsDashboard from './AnalyticsDashboard';
 import AIAssistant from './AIAssistant';
 import SupplierReportInbox from './Supplier_Report_Inbox';
 import Supplier_Smart_Dispatch from './Supplier_Smart_Dispatch';
+import SupplierParcelTracking from './SupplierParcelTracking';
 import { Supplier_Team_Management } from './Supplier_Team_Management';
+import { SCEFCommandCenter } from '../SCEF/SCEFCommandCenter';
+import { GSINCommandCenter } from '../GSIN/GSINCommandCenter';
+import GACIFCommandCenter from '../GACIF/GACIFCommandCenter';
+import DriversAndVehicles from './DriversAndVehicles';
+import ActivityAuditReports from './ActivityAuditReports';
+import GlobalShipmentReadiness from '../GlobalShipmentReadiness';
 
 const demandForecast = [
   { month: 'Jan', actual: 2400, predicted: 2300 },
@@ -109,8 +116,15 @@ const warehouseDistribution = [
 ];
 
 
+type SidebarItem = {
+  id: 'overview' | 'inventory' | 'parcel-tracking' | 'smart-dispatch' | 'scef' | 'gsin' | 'gacif' | 'global-readiness' | 'forecasting' | 'restocking' | 'warehouses' | 'reports' | 'alerts' | 'analytics' | 'team-management' | 'ai-assistant' | 'drivers-vehicles' | 'activity-audit' | 'profile';
+  label: string;
+  icon: any;
+  color: string;
+};
+
 export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'inventory' | 'parcel-tracking' | 'smart-dispatch' | 'scef' | 'gsin' | 'gacif' | 'global-readiness' | 'forecasting' | 'restocking' | 'warehouses' | 'reports' | 'alerts' | 'analytics' | 'team-management' | 'ai-assistant' | 'drivers-vehicles' | 'activity-audit' | 'profile'>('overview');
   const [currentVersion, setCurrentVersion] = useState('v1.2.0');
   const [latestVersion, setLatestVersion] = useState('v1.3.0');
   const [updateInProgress, setUpdateInProgress] = useState(false);
@@ -124,6 +138,8 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
   const [showDocumentsDialog, setShowDocumentsDialog] = useState(false);
   const [showSecurityDialog, setShowSecurityDialog] = useState(false);
   const [showPerformanceDialog, setShowPerformanceDialog] = useState(false);
+  const [systemLanguage, setSystemLanguage] = useState('English');
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
 
   // Minimal software updates data for overview
   const systemMessages: { id: string; type: 'urgent' | 'feature' | 'maintenance' | 'info'; title: string; timestamp: string }[] = [
@@ -185,6 +201,8 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
     pinCode: '400001',
     warehouseLocations: ['Mumbai', 'Delhi', 'Bangalore', 'Chennai'],
     serviceableRegions: ['West India', 'North India', 'South India', 'East India'],
+    preferredLanguage: 'English',
+    alternateLanguage: 'Hindi',
     
     // Section 4 - Supply Details
     productCategories: ['Electronics', 'Automotive Parts', 'Industrial Components'],
@@ -233,19 +251,26 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
     verifiedBadge: true
   });
 
-  const sidebarItems = [
+  const sidebarItems: SidebarItem[] = [
     { id: 'overview', label: 'Overview', icon: BarChart3, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'inventory', label: 'Inventory', icon: Package, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'parcel-tracking', label: 'Parcel Tracking', icon: PackageCheck, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'smart-dispatch', label: 'Smart Dispatch', icon: Truck, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'scef', label: 'SCEF™ AI', icon: Globe, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'gsin', label: 'GSIN™ Network', icon: Network, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'gacif', label: 'GACIF™ Compliance', icon: ShieldCheck, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'global-readiness', label: 'Global Shipment Readiness™', icon: Globe2, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'forecasting', label: 'Demand Forecast', icon: Brain, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'restocking', label: 'Restocking Planner', icon: Calculator, color: 'from-[#00F5C4] to-[#00D4A8]' },
-    { id: 'smart-dispatch', label: 'Smart Dispatch', icon: Truck, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'warehouses', label: 'Distributions', icon: Map, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'reports', label: 'Report Inbox', icon: AlertTriangle, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'alerts', label: 'Alerts & Notifications', icon: Bell, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'analytics', label: 'Analytics', icon: Activity, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'team-management', label: 'Team Management', icon: Users, color: 'from-[#00F5C4] to-[#00D4A8]' },
     { id: 'ai-assistant', label: 'AI Assistant', icon: MessageCircle, color: 'from-[#00F5C4] to-[#00D4A8]' },
-        { id: 'profile', label: 'Profile', icon: User, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'drivers-vehicles', label: 'Drivers & Vehicles', icon: Users, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'activity-audit', label: 'Activity & Audit', icon: FileText, color: 'from-[#00F5C4] to-[#00D4A8]' },
+    { id: 'profile', label: 'Profile', icon: User, color: 'from-[#00F5C4] to-[#00D4A8]' },
   ];
 
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -278,8 +303,23 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
                   <Package className="w-6 h-6 text-slate-900" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold text-white">Supplier Portal</h1>
-                  <p className="text-xs text-slate-400">Planning & Inventory</p>
+                  <h1 className="text-lg font-bold text-white">LogiCortex AI</h1>
+                  <p className="text-xs text-slate-400">Supplier Planning & Inventory</p>
+                </div>
+              </div>
+            </div>
+
+            {/* User Info Section */}
+            <div className="px-4 py-3 border-b border-slate-800/50 bg-slate-800/30">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#00F5C4] to-[#00D4A8] flex items-center justify-center shadow-lg flex-shrink-0">
+                  <User className="w-5 h-5 text-slate-900" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-semibold text-white truncate">John Smith</div>
+                  <div className="text-xs text-slate-400 truncate">Global Supply Chain Co.</div>
+                  <div className="text-xs text-slate-500 mt-1">Last login: 2 hours ago</div>
+                  <div className="text-xs text-slate-500">10/8/2026 • 9:29:18 am</div>
                 </div>
               </div>
             </div>
@@ -349,9 +389,9 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
             </div>
             
             <div className="flex items-center gap-3">
-              <button 
-                className="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" 
-                title="Notifications" 
+              <button
+                className="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                title="Notifications"
                 aria-label="Notifications"
                 onClick={() => setShowNotifications(!showNotifications)}
               >
@@ -363,6 +403,43 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
               <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg border border-slate-700/50">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-green-400 text-sm font-medium">System Active</span>
+              </div>
+              
+              {/* Language Selector */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                  title="Select Language"
+                  aria-label="Select Language"
+                >
+                  <Languages className="w-4 h-4" />
+                  <span className="text-sm font-medium">{systemLanguage}</span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+                
+                {showLanguageDropdown && (
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                    <div className="p-2">
+                      {['English', 'Hindi', 'Spanish', 'French', 'German', 'Japanese', 'Chinese', 'Arabic', 'Portuguese', 'Russian'].map((language) => (
+                        <button
+                          key={language}
+                          onClick={() => {
+                            setSystemLanguage(language);
+                            setShowLanguageDropdown(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                            systemLanguage === language 
+                              ? 'bg-[#00F5C4]/20 text-[#00F5C4]' 
+                              : 'text-slate-300 hover:bg-slate-800/50'
+                          }`}
+                        >
+                          {language}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               
               <button className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" title="Settings" aria-label="Settings">
@@ -429,12 +506,8 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
                       <div>
-                        <h1 className="text-2xl font-bold text-white">John Smith</h1>
+                        <h1 className="text-2xl font-bold text-white">"Welcome Sir / Madam"</h1>
                         <p className="text-slate-400">Global Supply Chain Co.</p>
-                      </div>
-                      <div className="text-slate-400">
-                        <p className="text-sm">Last login: 2 hours ago</p>
-                        <p className="text-sm">{new Date().toLocaleDateString()} • {new Date().toLocaleTimeString()}</p>
                       </div>
                     </div>
                                       </div>
@@ -932,14 +1005,20 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
         {/* Inventory Management Tab */}
         {activeTab === 'inventory' && <InventoryManagement />}
 
+        {/* Parcel Tracking Tab */}
+        {activeTab === 'parcel-tracking' && <SupplierParcelTracking />}
+
+        {/* Smart Dispatch Tab */}
+        {activeTab === 'smart-dispatch' && <Supplier_Smart_Dispatch />}
+
+        {/* SCEF™ AI Tab */}
+        {activeTab === 'scef' && <SCEFCommandCenter />}
+
         {/* Demand Forecast Tab */}
         {activeTab === 'forecasting' && <DemandForecast />}
 
         {/* Restocking Planner Tab */}
         {activeTab === 'restocking' && <RestockingPlanner />}
-
-        {/* Smart Dispatch Tab */}
-        {activeTab === 'smart-dispatch' && <Supplier_Smart_Dispatch />}
 
         {/* Warehouse Distribution Tab */}
         {activeTab === 'warehouses' && <WarehouseDistribution />}
@@ -958,6 +1037,21 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
 
         {/* AI Assistant Tab */}
         {activeTab === 'ai-assistant' && <AIAssistant />}
+
+        {/* Drivers & Vehicles Tab */}
+        {activeTab === 'drivers-vehicles' && <DriversAndVehicles />}
+
+        {/* Activity & Audit Tab */}
+        {activeTab === 'activity-audit' && <ActivityAuditReports />}
+
+        {/* GSIN™ Network Tab */}
+        {activeTab === 'gsin' && <GSINCommandCenter />}
+
+        {/* GACIF™ Compliance Tab */}
+        {activeTab === 'gacif' && <GACIFCommandCenter />}
+
+        {/* Global Shipment Readiness™ Tab */}
+        {activeTab === 'global-readiness' && <GlobalShipmentReadiness />}
 
         {/* Profile Tab */}
         {activeTab === 'profile' && (
@@ -1083,18 +1177,33 @@ export function SupplierDashboard({ onLogout }: SupplierDashboardProps) {
                   { label: 'Email ID', value: profileData.email, key: 'email', type: 'email' },
                   { label: 'Phone Number', value: profileData.phone, key: 'phone', type: 'tel' },
                   { label: 'Alternate Phone', value: profileData.alternatePhone, key: 'alternatePhone', type: 'tel' },
-                  { label: 'Website URL', value: profileData.website, key: 'website' }
+                  { label: 'Website URL', value: profileData.website, key: 'website' },
+                  { label: 'Preferred Language', value: profileData.preferredLanguage, key: 'preferredLanguage', type: 'select', options: ['English', 'Hindi', 'Spanish', 'French', 'German', 'Japanese', 'Chinese', 'Arabic', 'Portuguese', 'Russian'] },
+                  { label: 'Alternate Language', value: profileData.alternateLanguage, key: 'alternateLanguage', type: 'select', options: ['English', 'Hindi', 'Spanish', 'French', 'German', 'Japanese', 'Chinese', 'Arabic', 'Portuguese', 'Russian', 'None'] }
                 ].map((field) => (
                   <div key={field.key} className="space-y-1">
                     <label htmlFor={field.key} className="text-sm font-medium text-slate-400">{field.label}</label>
                     {isEditingProfile ? (
-                      <input
-                        id={field.key}
-                        type={field.type || 'text'}
-                        value={field.value}
-                        onChange={(e) => setProfileData({...profileData, [field.key]: e.target.value})}
-                        className="w-full text-white font-medium bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 focus:outline-none focus:border-[#00F5C4]"
-                      />
+                      field.type === 'select' ? (
+                        <select
+                          id={field.key}
+                          value={field.value}
+                          onChange={(e) => setProfileData({...profileData, [field.key]: e.target.value})}
+                          className="w-full text-white font-medium bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 focus:outline-none focus:border-[#00F5C4]"
+                        >
+                          {field.options?.map((option) => (
+                            <option key={option} value={option} className="bg-slate-800">{option}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          id={field.key}
+                          type={field.type || 'text'}
+                          value={field.value}
+                          onChange={(e) => setProfileData({...profileData, [field.key]: e.target.value})}
+                          className="w-full text-white font-medium bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 focus:outline-none focus:border-[#00F5C4]"
+                        />
+                      )
                     ) : (
                       <div className="text-white font-medium">{field.value}</div>
                     )}

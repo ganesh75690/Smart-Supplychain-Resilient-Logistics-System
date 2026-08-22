@@ -99,7 +99,7 @@ const mockAlerts: Alert[] = [
     severity: 'medium',
     status: 'active',
     timestamp: '2024-04-24T11:20:00Z',
-    source: 'Supplier Portal',
+    source: 'LogiCortex AI Supplier Portal',
     affectedItems: [
       { sku: 'SKU-2341', name: 'Brake Pads' }
     ],

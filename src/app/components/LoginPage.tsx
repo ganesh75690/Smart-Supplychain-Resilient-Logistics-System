@@ -180,7 +180,7 @@ export function LoginPage({ onLogin }: { onLogin: (userData: { userId: string; e
               <Brain className="w-10 h-10 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-white">SmartChain AI</h1>
+              <h1 className="text-4xl font-bold text-white">LogiCortex AI</h1>
               <p className="text-lg text-slate-400">Supply Chain Intelligence Platform</p>
             </div>
           </motion.div>

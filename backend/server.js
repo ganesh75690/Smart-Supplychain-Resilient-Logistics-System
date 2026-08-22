@@ -5,18 +5,6 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 
-// Import routes
-const authRoutes = require('./routes/authRoutes');
-const driverRoutes = require('./routes/driverRoutes');
-const supplierRoutes = require('./routes/supplierRoutes');
-const routeRoutes = require('./routes/routeRoutes');
-const inventoryRoutes = require('./routes/inventoryRoutes');
-const networkAutopilotRoutes = require('./routes/networkAutopilotRoutes');
-
-// Import middleware
-const errorHandler = require('./middleware/errorHandler');
-const auth = require('./middleware/auth');
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -58,12 +46,35 @@ app.get('/api/health', (req, res) => {
 });
 
 // API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/drivers', driverRoutes);
-app.use('/api/suppliers', supplierRoutes);
-app.use('/api/routes', routeRoutes);
-app.use('/api/inventory', inventoryRoutes);
-app.use('/api/network-autopilot', networkAutopilotRoutes);
+// app.use('/api/auth', authRoutes);
+// app.use('/api/drivers', driverRoutes);
+// app.use('/api/suppliers', supplierRoutes);
+// app.use('/api/routes', routeRoutes);
+// app.use('/api/inventory', inventoryRoutes);
+// app.use('/api/network-autopilot', networkAutopilotRoutes);
+
+// GASDF Routes
+const GASDFController = require('./controllers/gasdfController');
+const gasdfController = new GASDFController();
+
+app.get('/api/gasdf/briefing', (req, res) => gasdfController.getExecutiveBriefing(req, res));
+app.get('/api/gasdf/dashboard', (req, res) => gasdfController.getDashboardData(req, res));
+app.post('/api/gasdf/decisions', (req, res) => gasdfController.createDecision(req, res));
+app.get('/api/gasdf/decisions', (req, res) => gasdfController.getAllDecisions(req, res));
+app.get('/api/gasdf/decisions/:id', (req, res) => gasdfController.getDecision(req, res));
+app.put('/api/gasdf/decisions/:id', (req, res) => gasdfController.updateDecision(req, res));
+app.get('/api/gasdf/opportunities', (req, res) => gasdfController.getOpportunities(req, res));
+app.get('/api/gasdf/opportunities/:id', (req, res) => gasdfController.getOpportunity(req, res));
+app.get('/api/gasdf/learning', (req, res) => gasdfController.getLearningData(req, res));
+app.post('/api/gasdf/learning', (req, res) => gasdfController.recordDecisionLearning(req, res));
+app.post('/api/gasdf/decisions/:id/analyze', (req, res) => gasdfController.analyzeDecision(req, res));
+app.get('/api/gasdf/decisions/:id/ripple', (req, res) => gasdfController.calculateRippleEffects(req, res));
+app.get('/api/gasdf/decisions/:id/genome', (req, res) => gasdfController.generateDecisionGenome(req, res));
+app.get('/api/gasdf/decisions/:id/consequences', (req, res) => gasdfController.calculateConsequences(req, res));
+app.get('/api/gasdf/decisions/:id/harmony', (req, res) => gasdfController.generateDecisionHarmony(req, res));
+app.get('/api/gasdf/decisions/:id/evolution', (req, res) => gasdfController.generateDecisionEvolution(req, res));
+app.post('/api/gasdf/decisions/:id/approval', (req, res) => gasdfController.createApprovalRequest(req, res));
+app.post('/api/gasdf/decisions/:id/approval/action', (req, res) => gasdfController.processApprovalAction(req, res));
 
 // Network Autopilot WebSocket support
 const WebSocket = require('ws');
@@ -164,28 +175,29 @@ app.get('/api/network-autopilot/events', (req, res) => {
   });
 });
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartchain', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB');
+// Database connection (disabled for demo)
+// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartchain', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// })
+// .then(() => {
+//   console.log('Connected to MongoDB');
   
   // Start server
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`WebSocket server running on port 8080`);
     console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`Note: MongoDB connection disabled for demo`);
   });
-})
-.catch((error) => {
-  console.error('Database connection error:', error);
-  process.exit(1);
-});
+// })
+// .catch((error) => {
+//   console.error('Database connection error:', error);
+//   process.exit(1);
+// });
 
 // Error handling middleware
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -197,20 +209,20 @@ app.use('*', (req, res) => {
 });
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
-});
+// process.on('SIGTERM', () => {
+//   console.log('SIGTERM received, shutting down gracefully');
+//   mongoose.connection.close(() => {
+//     console.log('MongoDB connection closed');
+//     process.exit(0);
+//   });
+// });
 
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
-});
+// process.on('SIGINT', () => {
+//   console.log('SIGINT received, shutting down gracefully');
+//   mongoose.connection.close(() => {
+//     console.log('MongoDB connection closed');
+//     process.exit(0);
+//   });
+// });
 
 module.exports = app;
